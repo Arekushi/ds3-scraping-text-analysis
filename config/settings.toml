@@ -1,0 +1,4 @@
+base_url =  "https://darksouls.fandom.com"
+weapons_url = "https://darksouls.fandom.com/wiki/Weapons_(Dark_Souls_III)"
+file_name = "weapons_links"
+save_files_format = 'json'

@@ -1,3 +1,5 @@
+# type: ignore
+from operator import add
 from pyspark.sql import SparkSession
 import findspark
 
@@ -6,15 +8,15 @@ def main():
     findspark.init()
 
     spark = SparkSession.builder \
-        .master("local") \
+        .master('local') \
         .appName('Word Count') \
         .getOrCreate()
     sc = spark.sparkContext
 
-    inputfile = sc.textFile("./data/lorem_ipsum.txt")
+    inputfile = sc.textFile("./data/word-count/lorem_ipsum.txt")
     counts = inputfile.flatMap(lambda l: l.split(' '))\
         .map(lambda w: (w, 1))\
-        .reduceByKey(lambda x, y: x + y)\
+        .reduceByKey(add)\
         .sortBy(lambda x: x[1], ascending=False)
     output = counts.collect()
 
