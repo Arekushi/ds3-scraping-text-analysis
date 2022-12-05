@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "ds3-scraping-text-analysis"
+version = "0.1.0"
+description = ""
+authors = ["Alexandre Ferreira de Lima <alex.ferreiradelima64@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ds3-scraping-text-analysis"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+apache-airflow-providers-celery = "^3.1.0"
+findspark = "^2.0.1"
+html5lib = "^1.1"
+pyspark = "^3.3.1"
+spark-nlp = "^4.2.4"
+pandas = "^1.5.2"
+dynaconf = "^3.1.11"
+types-beautifulsoup4 = "^4.11.6.1"
+beautifulsoup4 = "^4.11.1"
+orjson = "^3.8.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

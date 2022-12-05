@@ -1,4 +1,3 @@
-# type: ignore
 from operator import add
 from pyspark.sql import SparkSession
 import findspark
