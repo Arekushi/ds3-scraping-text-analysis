@@ -1,41 +1,46 @@
+import re
+from itertools import repeat
+
+import requests
+from requests import Session
+
 from config import settings
-from ..scraping import get_weapon_content
-from ..scraping.get_save_links import get_links
-from ..utils import save_json, load_json, file_exists
 from multiprocessing.dummy import Pool
 from multiprocessing import cpu_count
 
-
-path = f'./src/data/weapons'
-
-
-def get_weapons_pool():
-    pool = Pool(cpu_count() * 2)
-    links = get_links()
-    weapons = pool.map(get_weapon, links)
-    pool.terminate()
-    pool.join()
-
-    return weapons
+from . import get_weapon_obj
+from ..scraping.get_save_urls import get_urls
+from ..utils import save_json
+from ..utils.path_utils import make_dir
 
 
-def get_weapons():
-    links = get_links()
-    return [get_weapon(weapon_dict) for weapon_dict in links]
+path = settings.weapons_path
 
 
-def get_weapon(weapon_dict):
-    print('Weapon:', weapon_dict['name'])
-    file_name = f"{weapon_dict['file_name']}.{settings.save_files_format}"
-    link = weapon_dict['link']
-
-    if file_exists(f'{path}/{file_name}'):
-        return load_json(f'{path}/{file_name}')
-    else:
-        return save_weapon(file_name, link)
+def fetch(session, url_obj):
+    with session.get(f"{settings.base_url}{url_obj['url']}") as response:
+        return response.content
 
 
-def save_weapon(file_name, link):
-    content = get_weapon_content(f'{settings.base_url}{link}')
-    save_json(content, path, file_name)
-    return content
+def get_all_content():
+    urls_obj = get_urls()
+
+    with Pool(cpu_count() * 2) as pool:
+        with requests.Session() as session:
+            return pool.starmap(fetch, zip(repeat(session), urls_obj))
+
+
+def get_save_weapons():
+    make_dir(path)
+
+    with Pool(cpu_count() * 2) as pool:
+        return pool.map(save_weapon, [get_weapon_obj(content) for content in get_all_content()])
+
+
+def save_weapon(weapon):
+    name = weapon['status']['info']['name']
+    print('Weapon:', name)
+    file_name = f"{re.sub('[^A-Za-z0-9]+', ' ', name).replace(' ', '-').lower()}.{settings.save_files_format}"
+
+    save_json(weapon, path, file_name)
+    return weapon

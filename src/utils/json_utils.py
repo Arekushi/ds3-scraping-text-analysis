@@ -3,8 +3,6 @@ from pathlib import Path
 
 
 def save_json(data, path, file_name):
-    Path(path).mkdir(parents=True, exist_ok=True)
-
     with open(f'{path}/{file_name}', 'w+') as file:
         file.write(orjson.dumps(data, option=orjson.OPT_INDENT_2).decode('utf-8'))
 

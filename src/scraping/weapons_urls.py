@@ -12,15 +12,8 @@ def get_weapons_links():
 
     for table in tables:
         weapons_links.extend(get_table_rows(table))
-        break
 
     return weapons_links
-
-
-def merge_two_dicts(x, y):
-    z = x.copy()
-    z.update(y)
-    return z
 
 
 def get_table_rows(table: Tag):
@@ -34,8 +27,7 @@ def get_table_rows(table: Tag):
 
         rows.append({
             'name': weapon_name,
-            'link': a['href'],
-            'file_name': f"{re.sub('[^A-Za-z0-9]+', ' ', weapon_name).replace(' ', '-').lower()}"
+            'url': a['href']
         })
 
     return rows

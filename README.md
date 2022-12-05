@@ -36,6 +36,8 @@ For the use of the project, some prerequisites will be necessary.
 * Docker
   1. You can download here: [Docker][docker_url]
   2. Here is a step-by-step installation tutorial. [(Tutorial)][docker_tutorial_url]
+* Poetry
+  1. You can install here: [Poetry][poetry_url]
 
 <br>
 
@@ -71,6 +73,7 @@ For the use of the project, some prerequisites will be necessary.
 [python_url]: https://www.python.org/downloads/
 [python_tutorial_url]: https://www.digitalocean.com/community/tutorials/install-python-windows-10
 [miniconda_tutorial]: https://katiekodes.com/setup-python-windows-miniconda/
+[poetry_url]: https://python-poetry.org/docs/#installation
 
 [ds3_weapons_url]: https://darksouls.fandom.com/wiki/Weapons_(Dark_Souls_III)
 

@@ -1,12 +1,19 @@
+import asyncio
+from multiprocessing import cpu_count
 from time import time
-from src.scraping import get_links
-from src.scraping.get_save_weapons import get_weapons_pool
-from src.scraping import get_weapons
+
+from src.scraping.get_save_weapons import get_save_weapons
+from src.scraping.get_save_weapons_thread import get_save_weapons_thread
 
 
-start = time()
-weapons = get_weapons_pool()
-# get_links()
-# weapons = get_weapons()
-end = time()
-print('It took', (end - start), 'seconds')
+def main():
+    start = time()
+
+    get_save_weapons()
+
+    end = time()
+    print('It took', (end - start), 'seconds')
+
+
+if __name__ == '__main__':
+    main()

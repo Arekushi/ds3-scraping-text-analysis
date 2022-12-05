@@ -1,12 +1,11 @@
-import requests
 import collections
+
 from bs4 import BeautifulSoup, Tag
 from ..utils.weapon_status_dict import weapon_status_dict
 
 
-def get_weapon_content(link):
-    response = requests.get(link)
-    soup = BeautifulSoup(response.content, features='html5lib')
+def get_weapon_obj(content):
+    soup = BeautifulSoup(content, features='lxml')
     status = get_status(soup)
     description = get_description(soup)
     availability = get_availability(soup)
@@ -94,7 +93,7 @@ def get_move_set(soup: BeautifulSoup):
     return moveset
 
 
-def get_data_by_data_source(source_tag, data_source, tag_looking, type = 'str'):
+def get_data_by_data_source(source_tag, data_source, tag_looking, type='str'):
     tag = source_tag.find(tag_looking, {'data-source': data_source})
     result = ''
 
