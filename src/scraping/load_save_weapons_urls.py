@@ -1,7 +1,7 @@
 from config import settings
 from ..scraping.weapons_urls_scraping import get_weapons_links
 from ..utils import save_json, load_json, file_exists
-
+from ..utils.path_utils import make_dir
 
 path = settings.links_path
 file_name = f'{settings.file_name}.{settings.save_files_format}'
@@ -16,5 +16,6 @@ def load_urls():
 
 def save_urls():
     weapons = get_weapons_links()
+    make_dir(path)
     save_json(weapons, path, file_name)
     return weapons
