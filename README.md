@@ -18,12 +18,19 @@ Project of the discipline `Projeto Integrador IV` of the 4º semester of the cou
 ### Portuguese description
 O projeto tem como objetivo capturar informações da wiki de Dark Souls 3 referente as [armas][ds3_weapons_url] encontradas no jogo e realizar uma análise sobre o texto encontrado.
 
+Dentro do projeto foi aplicado a técnica de `Topic Modelling`
+
+### O que é Topic Modelling?
+> A modelagem de tópicos é o processo de extrair os principais temas de um determinado corpus de dados de texto.
+
+> Wikipedia: No aprendizado de máquina e no processamento de linguagem natural, um modelo de tópico é um tipo de modelo estatístico para descobrir os "tópicos" abstratos que ocorrem em uma coleção de documentos.
+
+
 
 ## Built With
 - [Python 3.8.15][python:3.8]
-- [Docker v20.10.8][docker:20.10.8]
 - [Apache Spark 3.1.2][spark:3.1.2]
-- [Apache Airflow 1.10.7][airflow:1.10.7]
+- [Spark NLP 4.2.4][spark-nlp]
 
 ## Getting Started
 For the use of the project, some prerequisites will be necessary.
@@ -33,25 +40,48 @@ For the use of the project, some prerequisites will be necessary.
   1. You can download here: [Python][python_url]
   2. Here is a step-by-step installation tutorial. [(Tutorial)][python_tutorial_url]
      1. Tutorial with Miniconda. [(Tutorial)][miniconda_tutorial]
-* Docker
-  1. You can download here: [Docker][docker_url]
-  2. Here is a step-by-step installation tutorial. [(Tutorial)][docker_tutorial_url]
 * Poetry
   1. You can install here: [Poetry][poetry_url]
+* Apache Spark
+  1. Follow the step by step: [Spark][apache_spark_tutorial]
 
 <br>
 
 ### Installation and usage
-> Will be added soon...
+1. Clone this repo.
+    ```sh
+    git clone https://github.com/Arekushi/ds3-scraping-text-analysis.git
+    ```
+
+2. Install packages with `Poetry`
+    ```sh
+    poetry install
+    ```
+
+3. Download the `FAT JAR` from `Spark NLP` and put it wherever you want
+    1. You can find here: https://github.com/JohnSnowLabs/spark-nlp/releases
+
+4. Go to `./src/config/settings.toml` and edit `spark_nlp_jar_path` value to your path.
+    ```toml
+    spark_nlp_jar_path = 'C:/spark/jars/spark-nlp-assembly-4.2.4.jar'
+    ```
+
+5. Execute:
+    ```sh
+    python ./main.py
+    ```
+
+6. Done, the whole process has been completed 🎉
+    1. You can see the results inside the `./src/data` folder
 
 ## Roadmap
 > Will be added soon...
 
-## Results
+## Video
 > Will be added soon...
 
 ## Acknowledgments
-> Will be added soon...
+Here in this [link][acknowledgments_url] you can see all the material I used to build the project. 😉
 
 ## Contributors
 | [<div><img width=115 src="https://avatars.githubusercontent.com/u/54884313?v=4"><br><sub>Alexandre Ferreira de Lima</sub></div>][arekushi] |
@@ -59,16 +89,14 @@ For the use of the project, some prerequisites will be necessary.
 
 <!-- [Build With] -->
 [python:3.8]: https://www.python.org/downloads/
-[docker:20.10.8]: https://docs.docker.com/engine/release-notes/
 [spark:3.1.2]: https://spark.apache.org/downloads.html
-[airflow:1.10.7]: https://airflow.apache.org/docs/apache-airflow/stable/start.html
+[spark-nlp]: https://nlp.johnsnowlabs.com/docs/en/quickstart
 
 <!-- [Some links] -->
 [fatec_ipiranga]: https://fatecipiranga.edu.br/
 [big_data_course]: https://fatecipiranga.edu.br/curso-superior-de-tecnologia-em-big-data-para-negocios/
 
-[docker_url]: https://www.docker.com/products/docker-desktop/
-[docker_tutorial_url]: https://runnable.com/docker/install-docker-on-windows-10
+[apache_spark_tutorial]: https://nlp.johnsnowlabs.com/docs/en/install#how-to-correctly-install-spark-nlp-on-windows
 
 [python_url]: https://www.python.org/downloads/
 [python_tutorial_url]: https://www.digitalocean.com/community/tutorials/install-python-windows-10
@@ -77,7 +105,9 @@ For the use of the project, some prerequisites will be necessary.
 
 [ds3_weapons_url]: https://darksouls.fandom.com/wiki/Weapons_(Dark_Souls_III)
 
+
 <!-- Acknowledgments -->
+[acknowledgments_url]: https://arekushi.notion.site/Acknowledgments-ea81ca63d5ee4d4ca9dc2ee0795c2262
 
 <!-- [Constributors] -->
 [arekushi]: https://github.com/Arekushi

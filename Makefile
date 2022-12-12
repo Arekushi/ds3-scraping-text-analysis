@@ -1,3 +1,7 @@
+main:
+	python ./main.py
+	npx rimraf ./tmp
+
 install:
 	poetry install
 
@@ -6,3 +10,6 @@ pip-freeze:
 
 pip-install:
 	pip install -r requirements.txt
+
+rimraf:
+	npx rimraf ./tmp

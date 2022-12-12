@@ -1,3 +1,4 @@
+import re
 import collections
 
 from bs4 import BeautifulSoup, Tag
@@ -6,18 +7,13 @@ from ..utils.weapon_status_dict import weapon_status_dict
 
 def weapon_content_to_dict(content):
     soup = BeautifulSoup(content, features='lxml')
-    status = get_status(soup)
-    description = get_description(soup)
-    availability = get_availability(soup)
-    characteristics = get_characteristics(soup)
-    move_set = get_move_set(soup)
 
     return {
-        'status': status,
-        'description': description,
-        'availability': availability,
-        'characteristics': characteristics,
-        'move_set': move_set
+        'status': get_status(soup),
+        'description': get_description(soup),
+        'availability': get_availability(soup),
+        'characteristics': get_characteristics(soup),
+        'move_set': get_move_set(soup)
     }
 
 
@@ -27,9 +23,9 @@ def get_status(soup: BeautifulSoup):
 
     for key, value in weapon_status_dict.items():
         for name, data_source, tag_looking, type in value:
-            status[key][name] = get_data_by_data_source(aside, data_source, tag_looking, type)
+            status[key][name] = data_by_data_source(aside, data_source, tag_looking, type)
 
-    status['info']['name'] = get_data_by_data_source(aside, 'name', 'h2')
+    status['info']['name'] = data_by_data_source(aside, 'name', 'h2')
     status['info']['image'] = aside.find('figure', {'class': 'pi-item pi-image'}).find('a')['href']
 
     return status
@@ -53,7 +49,7 @@ def get_availability(soup: BeautifulSoup):
     try:
         span = soup.find('span', {'id': 'Availability'})
         h2 = span.parent
-        availability = get_text_by_h2(h2)
+        availability = text_by_h2(h2)
     except AttributeError:
         pass
 
@@ -66,7 +62,7 @@ def get_characteristics(soup: BeautifulSoup):
     try:
         span = soup.find('span', {'id': 'Characteristics'})
         h2 = span.parent
-        characteristics = get_text_by_h2(h2)
+        characteristics = text_by_h2(h2)
     except AttributeError:
         pass
 
@@ -86,6 +82,10 @@ def get_move_set(soup: BeautifulSoup):
             name = tr.find('th').get_text(separator=' ').strip()
             col = tr.find('td')
             description = handle_text(col.text)
+
+            if re.sub('[^A-Za-z0-9]+', '', description).__eq__(''):
+                break
+
             moveset[name] = description
     except AttributeError:
         pass
@@ -93,7 +93,7 @@ def get_move_set(soup: BeautifulSoup):
     return moveset
 
 
-def get_data_by_data_source(source_tag, data_source, tag_looking, type='str'):
+def data_by_data_source(source_tag, data_source, tag_looking, type='str'):
     tag = source_tag.find(tag_looking, {'data-source': data_source})
     result = ''
 
@@ -113,7 +113,7 @@ def get_data_by_data_source(source_tag, data_source, tag_looking, type='str'):
     return result
 
 
-def get_text_by_h2(h2: Tag):
+def text_by_h2(h2: Tag):
     text = []
 
     for sib in h2.next_siblings:

@@ -4,3 +4,25 @@ file_name = 'weapons_urls'
 save_files_format = 'json'
 links_path = './src/data/urls'
 weapons_path = './src/data/weapons'
+pyldavis_path = './src/data/out'
+word_clouds_pdf_path = './src/data/out'
+spark_nlp_jar_path = 'X:/spark/jars/spark-nlp-assembly-4.2.4.jar'
+spark_local_dir = './tmp'
+stop_words = [
+    'fp', 'value', 'also', 'drop', 'end', 'build',
+    'utilize', 'give', 'spin', 'soul', 'true',
+    'par', 'chain', 'lockon', 'player', 'without',
+    'pack', 'like', 'right', 'elevator', 'moveset',
+    'tell', 'in-game', 'ingame', 'description',
+    'skill', 'weapon', 'obtain', 'take', 'path',
+    'game', 'shortcut', 'damage', 'endthe', 'make',
+    'second', 'able', 'stairs', 'either', 'along',
+    'instead'
+]
+dataframe_columns = [
+    'name',
+    'description',
+#    'availability',
+    'characteristics',
+    'move_set'
+]

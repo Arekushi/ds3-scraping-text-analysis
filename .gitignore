@@ -4,5 +4,7 @@
 __pycache__
 .idea
 
-**/examples/data
 **/src/data
+**/tmp
+**/examples
+**/unused
