@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup, Tag
 from ..utils.weapon_status_dict import weapon_status_dict
 
 
-def get_weapon_obj(content):
+def weapon_content_to_dict(content):
     soup = BeautifulSoup(content, features='lxml')
     status = get_status(soup)
     description = get_description(soup)
@@ -40,7 +40,7 @@ def get_description(soup: BeautifulSoup):
 
     try:
         div = soup.find('div', {'class': 'mainbg'})
-        description = div.text.strip()
+        description = handle_text(div.text.strip())
     except AttributeError:
         pass
 
@@ -85,7 +85,7 @@ def get_move_set(soup: BeautifulSoup):
         for tr in trs[1::]:
             name = tr.find('th').get_text(separator=' ').strip()
             col = tr.find('td')
-            description = col.text.strip()
+            description = handle_text(col.text)
             moveset[name] = description
     except AttributeError:
         pass
@@ -105,6 +105,8 @@ def get_data_by_data_source(source_tag, data_source, tag_looking, type='str'):
             result = int(result)
         elif type == 'float':
             result = float(result)
+        elif result.__eq__('-'):
+            result = None
     except ValueError:
         result = None
 
@@ -117,10 +119,14 @@ def get_text_by_h2(h2: Tag):
     for sib in h2.next_siblings:
         if isinstance(sib, Tag):
             if sib.name == 'ul':
-                text.extend([li.text.strip() for li in sib.find_all('li')])
+                text.extend([handle_text(li.text) for li in sib.find_all('li')])
             elif sib.name == 'p':
-                text.append(sib.text.strip())
+                text.append(handle_text(sib.text))
             else:
                 break
 
     return text
+
+
+def handle_text(text: str):
+    return ' '.join(text.strip().split())
