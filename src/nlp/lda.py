@@ -1,10 +1,9 @@
 from pyspark.sql.functions import udf, col
 from pyspark.sql.types import ArrayType, StringType
 from pyspark.ml.clustering import LDA
-from src.nlp import vectorization
 
 
-num_topics = 4
+num_topics = 3
 max_iter = 50
 num_top_words = 25
 seed = 2022

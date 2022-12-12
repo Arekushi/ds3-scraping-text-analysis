@@ -11,12 +11,6 @@ from config import settings
 from src.scraping import load_weapons, transform_weapons
 
 
-finisher_columns = (
-    'unigrams',
-    # 'ngrams'
-)
-
-
 def clean_dataframe(spark):
     df = get_df(spark)
 
@@ -26,8 +20,6 @@ def clean_dataframe(spark):
         normalizer(),
         lemmatizer(),
         stopwords_cleaner(),
-        pos_tagger(),
-        chunker(),
         finisher()
     ])
 
@@ -35,7 +27,7 @@ def clean_dataframe(spark):
 
     final_df = clean_df_result.withColumn(
         'final', f.concat(
-            *[f.col(f'finished_{column}') for column in finisher_columns]
+            *[f.col(f'finished_{column}') for column in settings.finisher_columns]
         )
     )
 
@@ -115,4 +107,4 @@ def chunker():
 
 def finisher():
     return Finisher()\
-        .setInputCols(*finisher_columns)
+        .setInputCols(*settings.finisher_columns)

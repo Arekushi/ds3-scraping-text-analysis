@@ -26,3 +26,7 @@ dataframe_columns = [
     'characteristics',
     'move_set'
 ]
+finisher_columns = [
+    'unigrams',
+#    'ngrams'
+]
