@@ -63,7 +63,7 @@ For the use of the project, some prerequisites will be necessary.
 
 4. Go to `./src/config/settings.toml` and edit `spark_nlp_jar_path` value to your path.
     ```toml
-    spark_nlp_jar_path = 'C:/spark/jars/spark-nlp-assembly-4.2.4.jar'
+    spark_nlp_jar_path = 'C:\\spark\\jars\\spark-nlp-assembly-4.2.4.jar'
     ```
 
 5. Execute:

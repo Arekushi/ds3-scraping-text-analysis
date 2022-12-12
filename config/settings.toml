@@ -6,7 +6,7 @@ links_path = './src/data/urls'
 weapons_path = './src/data/weapons'
 pyldavis_path = './src/data/out'
 word_clouds_pdf_path = './src/data/out'
-spark_nlp_jar_path = 'X:/spark/jars/spark-nlp-assembly-4.2.4.jar'
+spark_nlp_jar_path = 'X:\\spark\\jars\\spark-nlp-assembly-4.2.4.jar'
 spark_local_dir = './tmp'
 stop_words = [
     'fp', 'value', 'also', 'drop', 'end', 'build',
